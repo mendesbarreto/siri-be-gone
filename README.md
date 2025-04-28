@@ -1,112 +1,102 @@
-# siri-be-gone
+# WARNING PROJECT NOT READY YET
 
-A macOS utility to selectively disable Siri, analytics, and other non-essential Apple services.
+# Siri Be Gone
 
-## Overview
+A macOS utility to disable Siri and related telemetry services for enhanced privacy.
 
-`siri-be-gone` gives you control over the numerous background services running on your Mac. It allows you to disable Siri-related services, analytics collectors, and other non-essential processes that may:
+## 🚀 Overview
 
-- Consume system resources
-- Collect data about your usage
-- Run in the background without your knowledge
-- Affect battery life and performance
+`siri-be-gone` is a command-line tool that allows you to disable Siri and various analytics services on your Mac. It offers two modes of operation:
 
-The tool offers two modes:
-- **Safe Mode**: Disables only non-essential services like Siri and analytics
-- **Nuke Mode**: Disables all possible services (use with caution)
+- **Safe Mode**: Disables only non-essential Siri and analytics services
+- **Nuke Mode**: Disables all possible services (may affect some functionality)
 
-## Installation
+And when you want Siri back, there's a companion script to restore everything.
+
+## 📋 Requirements
+
+- macOS 10.15 (Catalina) or newer
+- Administrator privileges (for disabling system services)
+
+## 🔧 Installation
+
+1. Clone this repository or download the scripts:
 
 ```bash
-# Clone the repository
 git clone https://github.com/yourusername/siri-be-gone.git
-
-# Navigate to the directory
 cd siri-be-gone
-
-# Make the script executable
-chmod +x siri_be_gone.sh
 ```
 
-## Usage
+2. Make the scripts executable:
 
 ```bash
-# Show help information
-./siri_be_gone.sh --help
+chmod +x siri_be_gone.sh
+chmod +x siri_come_back.sh
+```
 
-# Run in safe mode (recommended for most users)
+## 🔍 Usage
+
+### Disabling Siri and Analytics
+
+To disable Siri and related services, use the `siri_be_gone.sh` script with one of the following options:
+
+```bash
+# Safe mode - disables only non-essential services
 ./siri_be_gone.sh --disable-type safe
 
-# Run in nuke mode (advanced users only)
-./siri_be_gone.sh -d nuke
+# Nuke mode - disables all possible services
+./siri_be_gone.sh --disable-type nuke
 ```
 
-## What It Does
+### Re-enabling Services
 
-This script uses `launchctl` to disable various macOS services:
-
-### Safe Mode Disables:
-- Siri and voice assistant services
-- Analytics collection services
-- Machine learning and intelligence services
-- Ad-related services
-
-### Nuke Mode Disables:
-- All services from Safe Mode
-- Various system services
-- Cloud-related services
-- Location services
-- And many more
-
-## Service Descriptions
-
-The script includes detailed descriptions of each service it can disable. Here are some examples:
-
-| Service | Description |
-|---------|-------------|
-| com.apple.Siri.agent | User-facing Siri agent |
-| com.apple.analyticsd | Collects system analytics data and sends to Apple |
-| com.apple.suggestd | Provides suggestions in Spotlight and other areas |
-| com.apple.photoanalysisd | Analyzes photos for facial recognition and categorization |
-
-## Caution
-
-- **Always run in safe mode first** before trying nuke mode
-- Some services are essential for normal macOS operation
-- Disabling certain services may affect functionality of some Apple features
-- Changes take full effect after restarting your Mac
-- To restore services, you may need to reset your Mac's launch services or reinstall macOS
-
-## Compatibility
-
-Tested on:
-- macOS Ventura (13.x)
-- macOS Sonoma (14.x)
-
-May work on other versions but use at your own risk.
-
-## Restoring Services
-
-If you need to restore services:
+To bring Siri back from vacation, use the companion script:
 
 ```bash
-# For user services
-launchctl enable gui/501/[service-name]
-launchctl bootstrap gui/501 /System/Library/LaunchAgents/[service-name].plist
-
-# For system services
-sudo launchctl enable system/[service-name]
-sudo launchctl bootstrap system /System/Library/LaunchDaemons/[service-name].plist
+./siri_come_back.sh
 ```
 
-## Disclaimer
+### Help
 
-This tool is provided for educational purposes only. Use at your own risk. The author is not responsible for any issues that may arise from using this script, including but not limited to system instability, data loss, or reduced functionality.
+For more information about available options:
 
-## License
+```bash
+./siri_be_gone.sh --help
+./siri_come_back.sh --help
+```
 
-MIT License
+## 🔒 What Gets Disabled?
 
-## Contributing
+### Safe Mode
+
+Safe mode disables non-essential services including:
+
+- Siri voice assistant
+- Speech recognition
+- Various analytics and telemetry services
+- Suggestion services
+
+### Nuke Mode
+
+Nuke mode disables everything in safe mode plus:
+
+- Location services
+- iCloud-related services
+- Additional analytics
+- Various background services
+- And much more...
+
+## ⚠️ Warnings
+
+- **Restart Required**: After running either script, restart your Mac for changes to take full effect.
+- **Functionality Impact**: Nuke mode may affect some Mac functionality that relies on the disabled services.
+- **Updates**: macOS updates may re-enable some services. Run the script again after major updates.
+- **Reversibility**: All changes can be reversed using the `siri_come_back.sh` script.
+
+## 📜 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🛠️ Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
